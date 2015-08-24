@@ -28,12 +28,14 @@ def list_var_to_md_table(code):
     text += table
     return text
 
-text = '| ' +feuille['Unnamed: 0'].str.lstrip() + ' | [[' + \
+begin_table = '| Variable | Nom raccourci | \n|----|----| \n'
+
+values = '| ' +feuille['Unnamed: 0'].str.lstrip() + ' | [[' + \
         feuille['nom_var_raccourci'] + ']] |'
-text = '\n'.join(text.tolist())
+values = '\n'.join(values.tolist())
 
 text = 'Cette table contient les ' + \
-        'variables suivantes : \n \n' + text
+        'variables suivantes : \n \n' + begin_table  + values
 
 path = os.path.join(path_wiki, filename[:-4] + '.md')
 f = open(path, 'w+')

@@ -15,11 +15,7 @@ from os.path import join
 path_doc = 'D:/data/code_cnaf/'
 path_wiki = 'C:/git/hackathon-des-allocs.wiki'
 
-filename, decalage = 'wbcontac.csv', 0
-file = os.path.join(path_doc, filename)
 
-feuille = pd.read_csv(file, sep=';')
-feuille = feuille[feuille.nom_var.notnull()]
 
 # Page de la table
 def list_var_to_md_table(code):
@@ -28,23 +24,21 @@ def list_var_to_md_table(code):
     text += table
     return text
 
-begin_table = '| Variable | Nom raccourci | \n|----|----| \n'
+def write_page_table(filename, feuille):
+    begin_table = '| Variable | Nom | \n|----|----| \n'
 
-values = '| ' +feuille['Unnamed: 0'].str.lstrip() + ' | [[' + \
-        feuille['nom_var_raccourci'] + ']] |'
-values = '\n'.join(values.tolist())
+    values = '| ' + feuille['Unnamed: 0'].str.lstrip() + ' | [[' + \
+             feuille['nom_var'] + ']] |'
+    values = '\n'.join(values.tolist())
 
-text = 'Cette table contient les ' + \
-        'variables suivantes : \n \n' + begin_table  + values
+    text = 'Cette table contient les ' + \
+           'variables suivantes : \n \n' + begin_table + values
 
-path = os.path.join(path_wiki, filename[:-4] + '.md')
-f = open(path, 'w+')
-f.write(text)
-f.close()
+    path = os.path.join(path_wiki, filename + '.md')
+    f = open(path, 'w+')
+    f.write(text)
+    f.close()
 
-
-# Page des variables
-feuille.fillna('', inplace=True)
 
 
 def code_to_md_table(code):
@@ -58,12 +52,31 @@ def code_to_md_table(code):
     return text
 
 
-for _, row in feuille.iterrows():
-    text = row['Description'] + '\n' + '\n'
-    text += code_to_md_table(row['Codification'])
+def write_wiki_page(feuille):
+    for _, row in feuille.iterrows():
+        text = row['Description'] + '\n' + '\n'
+        text += code_to_md_table(row['Codification'])
 
-    path = os.path.join(path_wiki, row['nom_var'] + '.md')
-    print path
-    f = open(path, 'w+')
-    f.write(text)
-    f.close()
+        path = os.path.join(path_wiki, row['nom_var'] + '.md')
+        print path
+        f = open(path, 'w+')
+        f.write(text)
+        f.close()
+
+
+def generate_wiki(filename):
+    file = os.path.join(path_doc, filename)
+    feuille = pd.read_csv(file + '.csv', sep=';')
+    feuille = feuille[feuille.nom_var.notnull()]
+    feuille.fillna('', inplace=True)
+
+    write_page_table(filename, feuille)
+    write_wiki_page(feuille)
+
+
+if __name__ == '__main__':
+    for filename in ['wbcontac', 'glsdp010', 'fi001000', 'allaah', 'allpaje',
+                     'glgc0020']:
+        generate_wiki(filename)
+
+

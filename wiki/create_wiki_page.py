@@ -28,7 +28,7 @@ def write_page_table(filename, feuille):
     begin_table = '| Variable | Nom | \n|----|----| \n'
 
     values = '| ' + feuille['Unnamed: 0'].str.lstrip() + ' | [[' + \
-             feuille['nom_var'] + ']] |'
+             feuille['nom_var_raccourci'] + ']] |'
     values = '\n'.join(values.tolist())
 
     text = 'Cette table contient les ' + \
@@ -57,7 +57,7 @@ def write_wiki_page(feuille):
         text = row['Description'] + '\n' + '\n'
         text += code_to_md_table(row['Codification'])
 
-        path = os.path.join(path_wiki, row['nom_var'] + '.md')
+        path = os.path.join(path_wiki, row['nom_var_raccourci'] + '.md')
         print path
         f = open(path, 'w+')
         f.write(text)

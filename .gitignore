@@ -56,3 +56,4 @@ docs/_build/
 # PyBuilder
 target/
 .spyderproject
+wiki/apicache/*

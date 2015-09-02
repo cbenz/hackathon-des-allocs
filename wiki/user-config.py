@@ -5,3 +5,4 @@ mylang = 'fr'
 usernames['wikiagd']['fr'] = u'AlexisBot'
 
 console_encoding = 'utf-8'
+textfile_encoding = 'utf-8'

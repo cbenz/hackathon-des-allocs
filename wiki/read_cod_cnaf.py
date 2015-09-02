@@ -15,7 +15,7 @@ def read_txt(filename):
     file = os.path.join(path_data, filename + '.txt')
     doc = open(file)
     text = doc.read()
-    return text
+    return text.decode('cp1252').encode('utf8')
 
 
 def _bloc_sous_groupe(bloc):

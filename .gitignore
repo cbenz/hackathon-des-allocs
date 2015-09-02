@@ -57,3 +57,4 @@ docs/_build/
 target/
 .spyderproject
 wiki/apicache/*
+wiki/throttle.ctrl

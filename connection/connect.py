@@ -6,7 +6,6 @@ Created on Fri Oct 02 09:17:10 2015
 """
 
 
-from sqlalchemy import create_engine
 import psycopg2
 
 # cfg
